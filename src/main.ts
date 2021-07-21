@@ -4,9 +4,12 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
-
+import { ValidationPipe } from './cats/validate.pipe';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useGlobalPipes(new ValidationPipe()); //使用全局管道验证
+
   // app.useStaticAssets('public'); //http://localhost:3000/1.png
   app.useStaticAssets(join(__dirname, '..', 'public'), { //配置静态资源路径及虚拟目录 //http://localhost:3000/static/1.png
     prefix: '/static',
@@ -14,7 +17,7 @@ async function bootstrap() {
 
   // 使用模板引擎渲染，使用ejs
   // 安装： cnpm i ejs --save
-  app.setBaseViewsDir('views');
+  app.setBaseViewsDir('views'); //设置渲染模板引擎的根目录
   app.setViewEngine('ejs');
 
   // 配置cookie中间件， 在article.controller.ts中使用 
@@ -42,3 +45,5 @@ bootstrap();
 
 // 使用模板引擎渲染，使用ejs
 // 安装： cnpm i ejs --save
+
+// main.js为入口文件

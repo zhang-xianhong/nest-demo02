@@ -12,7 +12,7 @@ export class UserController {
     @Post('doAdd') 
     doAdd(@Body() body, @Response() res) {
         console.log(body); //可以获取到default/user.ejs里面表单提交的数据
-        res.redirect('/user'); //路由跳转
+        res.redirect('/user'); //路由跳转,重定向
         // return '增加成功';
     }
 
