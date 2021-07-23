@@ -15,25 +15,39 @@ var news_service_1 = require("./news/news.service");
 var news_controller_1 = require("./news/news.controller");
 var article_controller_1 = require("./article/article.controller");
 var cats_module_1 = require("./cats/cats.module");
-// import { MongooseModule } from '@nestjs/mongoose';
-var typeorm_1 = require("@nestjs/typeorm");
+// import { Connection } from 'typeorm';
+// import { User } from './users/user.entity';
 var user_module_1 = require("./users/user.module");
+var sequelize_1 = require("@nestjs/sequelize");
+var user_model_1 = require("./users/user.model");
 var AppModule = /** @class */ (function () {
-    function AppModule(connection) {
-        this.connection = connection;
+    // export class AppModule implements NestModule {
+    //   configure(consumer: MiddlewareConsumer){
+    //     consumer.apply(LoggerMiddleware).forRoutes({
+    //       path: 'cats',
+    //       method: RequestMethod.GET
+    //     });
+    //   }
+    // }
+    // export class AppModule implements NestModule {
+    //   configure(consumer: MiddlewareConsumer){
+    //     consumer.apply(logger).forRoutes(CatsController);
+    //   }
+    // }
+    function AppModule() {
     }
     AppModule = __decorate([
         common_1.Module({
-            imports: [cats_module_1.CatsModule, user_module_1.UsersModule, typeorm_1.TypeOrmModule.forRoot({
-                    type: 'mysql',
+            imports: [cats_module_1.CatsModule, user_module_1.UsersModule, sequelize_1.SequelizeModule.forRoot({
+                    dialect: 'mysql',
                     host: 'localhost',
                     port: 3306,
                     username: 'root',
                     password: '12345678',
                     database: 'zxh_databases',
-                    // entities: [User],
-                    synchronize: true,
-                    autoLoadEntities: true
+                    models: [user_model_1.UserModel],
+                    autoLoadModels: true,
+                    synchronize: true
                 })],
             controllers: [app_controller_1.AppController, user_controller_1.UserController, news_controller_1.NewsController, article_controller_1.ArticleController],
             providers: [app_service_1.AppService, news_service_1.NewsService]

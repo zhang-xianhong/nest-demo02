@@ -8,8 +8,9 @@ import {
   Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './user.entity';
+// import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
+import { UserModel } from './user.model';
 
 @Controller('users')
 export class UsersController {
@@ -21,14 +22,14 @@ export class UsersController {
   }
 
   @Get('findAll')
-  findAll(): Promise<UserDto[]> {
+  findAll(): Promise<UserModel[]> {
     return this.usersService.findAll();
   }
 
   @Post('create')
-  async create(@Body() user: UserDto) {
+  async create(@Body() user: UserModel) {
     try {
-      console.log('createUser', user);
+      // console.log('createUser', user);
       return await this.usersService.create(user);
     } catch (error) {
       console.log('error', error);
@@ -36,12 +37,12 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param() id: string): Promise<UserDto> {
+  findOne(@Param('id') id: string): Promise<UserModel> {
     return this.usersService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param() id: string, @Body() updateUser: UserDto): Promise<any> {
+  update(@Param('id') id: number, @Body() updateUser: UserDto): Promise<any> {
     return this.usersService.update(id, updateUser);
   }
 

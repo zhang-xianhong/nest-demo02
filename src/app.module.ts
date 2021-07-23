@@ -11,21 +11,24 @@ import { CatsModule } from './cats/cats.module';
 import { logger } from './common/middleware/logger.middleware';
 // import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
-import { User } from './users/user.entity';
+// import { Connection } from 'typeorm';
+// import { User } from './users/user.entity';
+
 import { UsersModule } from './users/user.module';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { UserModel } from './users/user.model';
 
 @Module({
-  imports: [CatsModule, UsersModule, TypeOrmModule.forRoot({
-    type: 'mysql',
+  imports: [CatsModule, UsersModule, SequelizeModule.forRoot({
+    dialect: 'mysql',
     host: 'localhost',
     port: 3306,
     username: 'root',
     password: '12345678',
     database: 'zxh_databases',
-    // entities: [User],
-    synchronize: true,
-    autoLoadEntities: true
+    models: [UserModel],
+    autoLoadModels: true,
+    synchronize: true
   })],
   controllers: [AppController, UserController, NewsController, ArticleController],
   providers: [AppService, NewsService],
@@ -47,5 +50,5 @@ import { UsersModule } from './users/user.module';
 // }
 
 export class AppModule {
-  constructor(private readonly connection: Connection) {}
+  // constructor(private readonly connection: Connection) {}
 }

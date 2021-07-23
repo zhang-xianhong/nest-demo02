@@ -18,7 +18,6 @@ export class AppController {
   setSession(@Request() req): any {
     // 设置session
     req.session.username = '哈哈哈';
-
     return '';
   }
 

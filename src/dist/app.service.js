@@ -6,24 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.UserDto = void 0;
-var class_validator_1 = require("class-validator");
-var UserDto = /** @class */ (function () {
-    function UserDto() {
+exports.AppService = void 0;
+var common_1 = require("@nestjs/common");
+var AppService = /** @class */ (function () {
+    function AppService(sequelize) {
+        this.sequelize = sequelize;
     }
-    __decorate([
-        class_validator_1.IsNumber()
-    ], UserDto.prototype, "id");
-    __decorate([
-        class_validator_1.IsNotEmpty(),
-        class_validator_1.IsString()
-    ], UserDto.prototype, "firstName");
-    __decorate([
-        class_validator_1.IsString()
-    ], UserDto.prototype, "lastName");
-    __decorate([
-        class_validator_1.IsBoolean()
-    ], UserDto.prototype, "isActive");
-    return UserDto;
+    AppService.prototype.getHello = function () {
+        return 'Hello World!';
+    };
+    AppService = __decorate([
+        common_1.Injectable()
+    ], AppService);
+    return AppService;
 }());
-exports.UserDto = UserDto;
+exports.AppService = AppService;

@@ -19,38 +19,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.User = void 0;
+exports.UserModel = void 0;
 var sequelize_typescript_1 = require("sequelize-typescript");
-// import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-var User = /** @class */ (function (_super) {
-    __extends(User, _super);
-    function User() {
+var UserModel = /** @class */ (function (_super) {
+    __extends(UserModel, _super);
+    function UserModel() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     __decorate([
-        sequelize_typescript_1.PrimaryKey,
-        sequelize_typescript_1.AutoIncrement,
-        sequelize_typescript_1.Column(sequelize_typescript_1.DataType.BIGINT)
-    ], User.prototype, "id");
+        sequelize_typescript_1.Column({
+            type: sequelize_typescript_1.DataType.STRING
+        })
+    ], UserModel.prototype, "firstName");
     __decorate([
         sequelize_typescript_1.Column({
             type: sequelize_typescript_1.DataType.STRING
         })
-    ], User.prototype, "firstName");
+    ], UserModel.prototype, "lastName");
     __decorate([
         sequelize_typescript_1.Column({
-            type: sequelize_typescript_1.DataType.STRING
-        })
-    ], User.prototype, "lastName");
-    __decorate([
-        sequelize_typescript_1.Column({
-            type: sequelize_typescript_1.DataType.BOOLEAN,
             defaultValue: true
         })
-    ], User.prototype, "isActive");
-    User = __decorate([
-        sequelize_typescript_1.Table
-    ], User);
-    return User;
+    ], UserModel.prototype, "isActive");
+    UserModel = __decorate([
+        sequelize_typescript_1.Table({
+            tableName: 'user-squelize'
+        })
+    ], UserModel);
+    return UserModel;
 }(sequelize_typescript_1.Model));
-exports.User = User;
+exports.UserModel = UserModel;

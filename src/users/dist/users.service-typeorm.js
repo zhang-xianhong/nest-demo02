@@ -47,18 +47,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.UsersService = void 0;
 var common_1 = require("@nestjs/common");
-var sequelize_1 = require("@nestjs/sequelize");
-var user_model_1 = require("./user.model");
+var typeorm_1 = require("@nestjs/typeorm");
+var user_entity_1 = require("./user.entity");
 var UsersService = /** @class */ (function () {
-    function UsersService(userModel) {
-        this.userModel = userModel;
+    function UsersService(usersRepository) {
+        this.usersRepository = usersRepository;
+        this.users = [];
     }
-    // private readonly users: UserDto[] = [];
     UsersService.prototype.findAll = function () {
+        console.log('find', this.usersRepository.find());
+        return this.usersRepository.find();
+    };
+    UsersService.prototype.create = function (user) {
         return __awaiter(this, void 0, Promise, function () {
+            var temp, error_1;
             return __generator(this, function (_a) {
-                console.log('find', this.userModel.findAll());
-                return [2 /*return*/, this.userModel.findAll()];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, this.usersRepository.create(user)];
+                    case 1:
+                        temp = _a.sent();
+                        console.log('tempCreate', temp);
+                        return [4 /*yield*/, this.usersRepository.save(temp)];
+                    case 2: return [2 /*return*/, _a.sent()];
+                    case 3:
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
             });
         });
     };
@@ -66,33 +84,8 @@ var UsersService = /** @class */ (function () {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.userModel.findOne({
-                            where: {
-                                id: id
-                            }
-                        })];
+                    case 0: return [4 /*yield*/, this.usersRepository.findOne(id)];
                     case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
-    UsersService.prototype.create = function (user) {
-        return __awaiter(this, void 0, Promise, function () {
-            var error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.userModel.create()];
-                    case 1: 
-                    // const temp = await this.userModel.create(user);
-                    // console.log('tempCreate', temp);
-                    return [2 /*return*/, _a.sent()];
-                    case 2:
-                        error_1 = _a.sent();
-                        console.log(error_1);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -100,20 +93,19 @@ var UsersService = /** @class */ (function () {
     UsersService.prototype.update = function (id, updateUser) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.usersRepository.update(id, updateUser)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
             });
         });
     };
     UsersService.prototype.remove = function (id) {
         return __awaiter(this, void 0, Promise, function () {
-            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.findOne(id)];
+                    case 0: return [4 /*yield*/, this.usersRepository["delete"](id)];
                     case 1:
-                        user = _a.sent();
-                        return [4 /*yield*/, user.destroy()];
-                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }
@@ -125,7 +117,7 @@ var UsersService = /** @class */ (function () {
     ], UsersService.prototype, "update");
     UsersService = __decorate([
         common_1.Injectable(),
-        __param(0, sequelize_1.InjectModel(user_model_1.UserModel))
+        __param(0, typeorm_1.InjectRepository(user_entity_1.User))
     ], UsersService);
     return UsersService;
 }());
