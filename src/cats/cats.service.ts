@@ -1,14 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { Cat } from './interfaces/cat.interface';
-@Injectable()
+import { HttpService } from "@nestjs/common";
+import { Observable } from "rxjs";
+
 export class CatsService {
-  private readonly cats: Cat[] = [];
+    constructor(private readonly httpService: HttpService) {}
 
-  create(cat: Cat) {
-    this.cats.push(cat);
-  }
-
-  findAll(): Cat[] {
-    return this.cats;
-  }
+    // findAll(): Observable<AxiosResponse>
 }

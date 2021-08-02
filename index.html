@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 未知长度字符串中出现次数最多的字符及出现的次数 -->
+    <script>
+        function findMaxSub(str) {
+            let map = new Map(),
+                arr = [];
+            arr = str.split('');
+            for (let i = 0; i < arr.length; i++) {
+                let item = arr[i];
+                if (map.has(item)) {
+                    map.set(item, map.get(item) + 1);
+                } else {
+                    map.set(item, 1);
+                }
+            }
+            let max = 0;
+            let index;
+            for (let [k, v] of map) {
+                max = Math.max(max, v);
+                if (max === v) {
+                    index = k;
+                }
+            }
+            return [index, max];
+        }
+        console.log(findMaxSub('dsdsdsdsddsfefef'));
+    </script>
+</body>
+
+</html>

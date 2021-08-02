@@ -4,7 +4,9 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
-import { ValidationPipe } from './cats/validate.pipe';
+import { ValidationPipe } from './testCats/validate.pipe';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
@@ -36,6 +38,15 @@ async function bootstrap() {
       rolling: true //rolling设置时间回滚，当设置的过期时间到时，会重新进行计时
     }),
   );
+
+  const options = new DocumentBuilder()
+    .setTitle('Cats example')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .addTag('cats')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }

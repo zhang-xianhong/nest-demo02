@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
 // import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { UserModel } from './user.model';
-import { SequelizeModule } from '@nestjs/sequelize';
-// import { User } from './user.entity';
+import { User } from './user.entity';
 
 @Module({
   // imports: [TypeOrmModule.forFeature([User])], //使用typeorm连接实体部分

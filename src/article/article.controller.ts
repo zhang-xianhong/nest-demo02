@@ -1,32 +1,35 @@
-import { Controller, Get, Response } from '@nestjs/common';
-import { NewsService } from '../news/news.service';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { QueryPipe, SearchQuery } from 'src/shared/pipes/query.pipe';
+import { ArticleModel } from './article.model';
+import { ArticleService } from './article.service';
+import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto } from './dto/update-article.dto';
+
 @Controller('article')
 export class ArticleController {
-
-    constructor(private newsService: NewsService) {}
-
-    // @Get()
-    // indexArticle(): any {
-    //     return this.newsService.findAll();
-    // }
-
-
-    // @Get()
-    // indexArticle(@Response() res): any {
-    //     res.cookie('username','zhangxianhong',{maxAge: 14000, httpOnly: true})
-    //     // maxAge设置cookie的过期时间
-    //     // 设置cookie
-    //     // return this.newsService.findAll();
-    //     res.send('这是文章页面');
-    // }
-
-    // 设置加密的cookie
+    constructor(private readonly articleService: ArticleService) {}
     @Get()
-    indexArticle(@Response() res): any {
-        res.cookie('username','zhangxianhong',{maxAge: 5555000, httpOnly: true, signed: true})
-        // maxAge设置cookie的过期时间
-        // 设置cookie
-        // return this.newsService.findAll();
-        res.send('这是文章页面'); //如果使用了Response装饰器，一般情况下不是直接return，而是写res.send()方法
+    index(): string {
+        return 'Article Page';
+    }
+
+    @Get('getArticleList')
+    findAll(@Query(new QueryPipe()) query: SearchQuery): Promise<any> {
+        return this.articleService.findAll(query);
+    }
+
+    @Post()
+    create(@Body() createArticleDto: CreateArticleDto) {
+        return this.articleService.create(createArticleDto);
+    }
+
+    @Post('delete/:id')
+    remove(@Param('id') id: number): Promise<any> {
+        return this.articleService.remove(id);
+    }
+
+    @Post('update/:id')
+    update(@Param('id') id: number, @Body() updateArticleDto: UpdateArticleDto) {
+        return this.articleService.update(id, updateArticleDto);
     }
 }

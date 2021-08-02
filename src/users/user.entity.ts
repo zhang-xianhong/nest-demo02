@@ -10,7 +10,7 @@ export class User extends Model {
   @AutoIncrement
   @Column(DataType.BIGINT)
   id: number;
-
+  
   @Column({
     type: DataType.STRING
   })
@@ -26,6 +26,13 @@ export class User extends Model {
     defaultValue: true
   })
   isActive: boolean;
+
+  // 是否删除
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  isDelete: boolean;
 
 //   @OneToMany((type) => Photo, (photo) => photo.user)
 //   photos: Photo[];

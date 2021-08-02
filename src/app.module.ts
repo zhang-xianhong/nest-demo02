@@ -4,9 +4,8 @@ import { AppService } from './app.service';
 import { UserController } from './testuser/user.controller';
 import { NewsService } from './news/news.service';
 import { NewsController } from './news/news.controller';
-import { ArticleController } from './article/article.controller';
-import { CatsController } from './cats/cats.controller';
-import { CatsModule } from './cats/cats.module';
+import { CatsController } from './testCats/cats.controller';
+import { CatsModule } from './testCats/cats.module';
 // import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { logger } from './common/middleware/logger.middleware';
 // import { MongooseModule } from '@nestjs/mongoose';
@@ -14,9 +13,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { Connection } from 'typeorm';
 // import { User } from './users/user.entity';
 
+import { ConfigModule } from '@nestjs/config';
+
 import { UsersModule } from './users/user.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModel } from './users/user.model';
+import { ArticleModule } from './article/article.module';
+import { TypeModule } from './type/type.module';
 
 @Module({
   imports: [CatsModule, UsersModule, SequelizeModule.forRoot({
@@ -26,11 +29,11 @@ import { UserModel } from './users/user.model';
     username: 'root',
     password: '12345678',
     database: 'zxh_databases',
-    models: [UserModel],
+    // models: [UserModel],
     autoLoadModels: true,
     synchronize: true
-  })],
-  controllers: [AppController, UserController, NewsController, ArticleController],
+  }), ArticleModule, TypeModule],
+  controllers: [AppController, UserController, NewsController],
   providers: [AppService, NewsService],
 })
 

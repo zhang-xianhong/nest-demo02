@@ -2,6 +2,7 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserDto } from './dto/user.dto';
 import { UserModel } from './user.model';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -12,9 +13,26 @@ export class UsersService {
 
   // private readonly users: UserDto[] = [];
 
-  async findAll(): Promise<UserModel[]> {
-    console.log('find', this.userModel.findAll());
-    return this.userModel.findAll();
+  async findAll(): Promise<any> {
+    console.log('findAll', this.userModel.findAll());
+    const data = await this.userModel.findAll();
+    return {
+      data
+    }
+    // return this.userModel.findAll({ //排序
+    //   order: [ ['id', 'DESC'] ]
+    // });
+    // where 参数用于过滤查询.where 子句有很多运算符,可以从 Op 中以 Symbols 的形式使用.
+    // return this.userModel.findAll({
+    //   where: {
+    //     id: {
+    //       [Op.eq]: 5
+    //     }
+    //   }
+    // })
+    // return this.userModel.findAll({ //查询特定属性
+    //   attributes: ['firstName', 'lastName']
+    // });
   }
 
   async findOne(id: string): Promise<UserModel> {
@@ -28,7 +46,7 @@ export class UsersService {
 
   async create(user: UserModel): Promise<any> {
     try {
-      // console.log("createUser", user);
+      console.log("createUser", user);
       return await this.userModel.create(user);
     } catch (error) {
       console.log(error);
@@ -47,7 +65,14 @@ export class UsersService {
   }
 
   async remove(id: string): Promise<void> {
-    const user = await this.findOne(id);
-    await user.destroy();
+    console.log('removeId: ', id);
+    // const user = await this.findOne(id);
+    // console.log('removeUser', user);
+    // await user.destroy();
+    await this.userModel.destroy({
+      where: {
+        id: id
+      }
+    })
   }
 }
